@@ -6,17 +6,13 @@ import blivedm
 
 # 直播间ID的取值看直播间URL
 TEST_ROOM_IDS = [
-    12235923,
-    14327465,
-    21396545,
-    21449083,
-    23105590,
+    103
 ]
 
 
 async def main():
     await run_single_client()
-    await run_multi_client()
+    # await run_multi_client()
 
 
 async def run_single_client():
@@ -32,7 +28,7 @@ async def run_single_client():
     client.start()
     try:
         # 演示5秒后停止
-        await asyncio.sleep(5)
+        await asyncio.sleep(60)
         client.stop()
 
         await client.join()
@@ -74,7 +70,7 @@ class MyHandler(blivedm.BaseHandler):
         print(f'[{client.room_id}] 当前人气值：{message.popularity}')
 
     async def _on_danmaku(self, client: blivedm.BLiveClient, message: blivedm.DanmakuMessage):
-        print(f'[{client.room_id}] {message.uname}：{message.msg}')
+        print(f'[{client.room_id}] {message.uname} say: {message.msg}')
 
     async def _on_gift(self, client: blivedm.BLiveClient, message: blivedm.GiftMessage):
         print(f'[{client.room_id}] {message.uname} 赠送{message.gift_name}x{message.num}'
@@ -88,4 +84,4 @@ class MyHandler(blivedm.BaseHandler):
 
 
 if __name__ == '__main__':
-    asyncio.get_event_loop().run_until_complete(main())
+    asyncio.get_event_loop().run_until_complete(run_single_client())
